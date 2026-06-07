@@ -22,13 +22,20 @@ const todosSlice = createSlice({
         })
 
         .addCase(addTodo.fulfilled, (state, action) => {
-            state.todos.push(action.payload)
+            // state.todos.push(action.payload)
+                        state.loading = false;
+            state.error = null;
+            todosAdapter.addOne(state, action.payload);
         })
-
+//addOne: accepts a single entity, and adds it if it's not already present.
         .addCase(deleteTodo.fulfilled, (state, action) => {
-            state.todos = state.todos.filter(
-                todo => todo.id !== action.payload
-            );
+            state.loading = false;
+            state.error = null;
+            todosAdapter.removeOne(state, action.payload);
+            console.log(action.payload)
+            // state.todos = state.todos.filter(
+            //     todo => todo.id !== action.payload
+            // );
         })
 
         .addCase(toggleTodoAsync.fulfilled, (state, action) => {
